@@ -1,6 +1,6 @@
 # NonBlockingDelay Library for Embedded Systems
 
-The **NonBlockingDelay** library provides non-blocking delay functionality for embedded systems, enabling timed operations without interrupting the program flow.
+The **NonBlockingDelay** library provides non-blocking delay functionality for embedded systems, enabling timed operations without halting program flow.
 
 ### Features:
 - **Non-blocking delays**: Allow execution of other tasks while waiting for timed intervals.
@@ -12,18 +12,23 @@ The **NonBlockingDelay** library provides non-blocking delay functionality for e
 2. Copy the `NonBlockingDelay` folder into your embedded systems project.
 3. Include the `.hpp` file in your project and start using the library.
 
-### Example:
+### Example: Basic Usage
+This example demonstrates how to set up a simple non-blocking delay to print a message to the serial monitor every second without halting other operations.
+
 ```cpp
 #include <NonBlockingDelay.hpp>
 
-NonBlockingDelay delay(1000); // 1000ms delay
+NonBlockingDelay ledDelay(500);  // 500ms delay for toggling the LED
+
+const int ledPin = 13;           // Pin for the LED (common on embedded boards)
 
 void setup() {
-  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);       // Set the LED pin as output
 }
 
 void loop() {
-  if (delay.check()) {
-    Serial.println("1 second has passed.");
+  if (ledDelay.check()) {
+    // Toggle the LED state every 500 milliseconds
+    digitalWrite(ledPin, !digitalRead(ledPin));
   }
 }
